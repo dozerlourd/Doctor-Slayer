@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Enemy
+  - SpecialAttack_Player
+  - SpecialAttack_Enemy
+  - Poison_Enemy
+  - Corpse
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - L_Ground
+  - L_Player
+  - L_Enemy
+  - L_PlayerSkill
+  - L_EnemySkill
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: S_Background
+    uniqueID: 3556976939
+    locked: 0
+  - name: S_Back Props
+    uniqueID: 1553747073
+    locked: 0
+  - name: S_Platform
+    uniqueID: 1041912479
+    locked: 0
+  - name: S_Enemy
+    uniqueID: 2223589509
+    locked: 0
+  - name: S_Object
+    uniqueID: 293399815
+    locked: 0
+  - name: S_PlayerBehindUI
+    uniqueID: 190257353
+    locked: 0
+  - name: S_Player
+    uniqueID: 2419452657
+    locked: 0
+  - name: S_Enemy Effect
+    uniqueID: 1945530143
+    locked: 0
+  - name: S_Player Effect
+    uniqueID: 294724453
+    locked: 0
+  - name: S_ENV Effect
+    uniqueID: 4102772093
+    locked: 0
+  - name: S_Front Props
+    uniqueID: 87712221
+    locked: 0
+  - name: S_WorldCanvas
+    uniqueID: 551533757
+    locked: 0
