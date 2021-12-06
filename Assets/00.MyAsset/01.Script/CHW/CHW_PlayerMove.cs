@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : PlayerStat
+public class CHW_PlayerMove : PlayerStat
 {
     Rigidbody2D rb;
     Animator anim;
-    PlayerAttack playerAttack;
+    CHW_PlayerAttack playerAttack;
     bool isJumping = false;
     bool isDash = false;
     public bool isDamaged = false;
@@ -33,7 +33,7 @@ public class PlayerMove : PlayerStat
     {
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        playerAttack = GetComponent<PlayerAttack>();
+        playerAttack = GetComponent<CHW_PlayerAttack>();
 
         StartCoroutine(SearchPlayerAndUILink());
     }

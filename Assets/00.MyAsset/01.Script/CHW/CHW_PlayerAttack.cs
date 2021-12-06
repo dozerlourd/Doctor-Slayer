@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttack : MonoBehaviour
+public class CHW_PlayerAttack : MonoBehaviour
 {
     [Tooltip("공격 범위")]
     public BoxCollider2D atkCollider;
@@ -10,7 +10,7 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] AudioClip[] attackSounds;
 
     Animator anim;
-    PlayerMove playerMove;
+    CHW_PlayerMove playerMove;
     Rigidbody2D rb;
 
     Coroutine Co_attack;
@@ -31,7 +31,7 @@ public class PlayerAttack : MonoBehaviour
         atkCollider.enabled = false;
 
         anim = GetComponent<Animator>();
-        playerMove = GetComponent<PlayerMove>();
+        playerMove = GetComponent<CHW_PlayerMove>();
         rb = GetComponent<Rigidbody2D>();
     }
 

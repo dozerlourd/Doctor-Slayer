@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace HCH
 {
-    public class PlayerMove : MonoBehaviour
+    public class PlayerMove_NotUse : MonoBehaviour
     {
         #region Variable
 
@@ -28,24 +28,19 @@ namespace HCH
 
         [Header(" - Gravity")]
         #region Gravity
-        [SerializeField] protected float gravityScale = 1.00f;
+        //[SerializeField] protected float gravityScale = 1.00f;
         #endregion
 
         #endregion
 
         #region HideInInspector
 
-        bool canJump = true;
-
-        bool isGround = false;
-
         Vector2 frontDir;
 
         BoxCollider2D boxCol2D;
         Animator anim;
         SpriteRenderer spriteRenderer;
-
-        Coroutine Co_Gravity;
+        Rigidbody2D rigid2D;
 
         #endregion
 
@@ -58,37 +53,49 @@ namespace HCH
             boxCol2D = GetComponent<BoxCollider2D>();
             anim = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
+            rigid2D = GetComponent<Rigidbody2D>();
         }
 
         void Update()
         {
             Vector2 moveVec = Vector2.zero;
-            JumpCheck(ref moveVec);
-            Move(ref moveVec);
-            transform.Translate(moveVec * moveSpeed * Time.deltaTime);
+
+            float h = Input.GetAxisRaw("Horizontal");
+            anim.SetBool("IsMove", isGround && h != 0);
+
+            FlipCheck(h);
+            if (!RayDerectWall())
+            {
+                moveVec.x = h;
+            }
+
+            if(isGround && !isJumping)
+            {
+                rigid2D.gravityScale = 0;
+                rigid2D.velocity = new Vector2(rigid2D.velocity.x, 0);
+            }
+            else
+            {
+                rigid2D.gravityScale = 1;
+            }
+
+            transform.Translate(new Vector2(moveVec.x * moveSpeed, rigid2D.velocity.y) * Time.deltaTime);
+        }
+
+        private void FixedUpdate()
+        {
+            GroundCheck(groundCheckRayDist);
+            Jump();
         }
 
         #endregion
 
         #region Implementation Place 
 
-        #region Movement
-
-        void Move(ref Vector2 Dir)
-        {
-            float h = Input.GetAxisRaw("Horizontal");
-
-            FlipCheck(h);
-            if (!RayDerectWall())
-            {
-                Dir.x = h;
-            }
-
-        }
+        #region DetectWall
 
         bool RayDerectWall()
         {
-            Debug.DrawRay(transform.position, frontDir * moveSpeed * Time.deltaTime, Color.red);
             return Physics2D.Raycast(transform.position, frontDir, moveSpeed * Time.deltaTime, LayerMask.GetMask("L_Ground"));
         }
 
@@ -96,37 +103,57 @@ namespace HCH
 
         #region Jump
 
-        void JumpCheck(ref Vector2 Dir)
+        public bool isJumping = false;
+
+        void Jump()
         {
-            if (Input.GetButtonDown("Jump"))
+            if (isJumping)
             {
-                if (canJump)
+                if (isGround)
                 {
-                    canJump = false;
-                    Dir.y = jumpPower;
+                    isJumping = false;
+                }
+                else return;
+            }
+
+            if (Input.GetButton("Jump"))
+            {
+                print("GetButtonDown");
+                isJumping = true;
+                if (rigid2D.velocity.y == 0)
+                {
+                    rigid2D.AddForce(new Vector2(0, jumpPower), ForceMode2D.Impulse);
                 }
             }
-            Grivaty(ref Dir);
-            canJump = true;
+            #region
+            //SoundManager.Instance.PlayEffectOneShot(jumpSounds, 0.2f);
+
+            //Vector2 jumpVelocity = new Vector2(0, jumpPower);
+
+            ////점프 가능 횟수가 0 이상이면
+            //if (Input.GetButtonDown("Jump"))
+            //{
+            //    print("HIAhids");
+            //    if (!isJumping)
+            //    {
+            //        rigid2D.velocity = Vector2.zero;
+
+            //        anim.SetTrigger("Jump");
+
+            //        rigid2D.AddForce(jumpVelocity, ForceMode2D.Impulse);
+            //        isJumping = true;
+            //    }
+
+            //    isJumping = false;
+            //}
+            #endregion
         }
 
         #endregion
 
-        #region Gravity
+        #region GroundCheck
 
-        void Grivaty(ref Vector2 Dir)
-        {
-            GroundCheck(groundCheckRayDist);
-
-            if (!isGround)
-            {
-                Dir.y += -(0.98f * gravityScale);
-            }
-            else
-            {
-                Dir.y = 0;
-            }
-        }
+        private bool isGround;
 
         void GroundCheck(float dist)
         {
@@ -148,5 +175,5 @@ namespace HCH
 
         #endregion
     }
-
 }
+

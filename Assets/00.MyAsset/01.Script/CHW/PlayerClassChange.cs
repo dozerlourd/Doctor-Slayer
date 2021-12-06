@@ -6,13 +6,13 @@ public class PlayerClassChange : MonoBehaviour
 {
     public RuntimeAnimatorController[] animController;
 
-    PlayerAttack playerAttack;
+    CHW_PlayerAttack playerAttack;
     BoxCollider2D bc;
 
     void Start()
     {
         bc = GetComponent<BoxCollider2D>();
-        playerAttack = GetComponent<PlayerAttack>();
+        playerAttack = GetComponent<CHW_PlayerAttack>();
         ClassChangeAnimator();
     }
 

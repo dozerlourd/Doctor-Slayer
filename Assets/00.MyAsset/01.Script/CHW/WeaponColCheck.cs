@@ -11,11 +11,11 @@ public class WeaponColCheck : MonoBehaviour
 
     [SerializeField] AudioClip attackSound;
 
-    PlayerAttack playerAttack;
+    CHW_PlayerAttack playerAttack;
 
     // playerAttack = playerAttack ? playerAttack : GetComponent<PlayerAttack>();
     // playerAttack이 있으면 playerAttack을 가져오고 없으면 GetComponent를 해서 가져오는 삼항연산자
-    PlayerAttack PlayerAttack => playerAttack = playerAttack ? playerAttack : transform.parent.parent.GetComponent<PlayerAttack>();
+    CHW_PlayerAttack PlayerAttack => playerAttack = playerAttack ? playerAttack : transform.parent.parent.GetComponent<CHW_PlayerAttack>();
 
     private void OnTriggerEnter2D(Collider2D col)
     {

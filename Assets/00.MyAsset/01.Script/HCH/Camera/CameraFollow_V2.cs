@@ -16,18 +16,7 @@ public class CameraFollow_V2 : MonoBehaviour
     {
         StartCoroutine(FindTarget());
     }
-    //void FixedUpdate()
-    //{
-    //    if (target == null) return;
-
-    //    Vector3 targetPos = target.position + cameraOffset; // This line of code just makes the camera follow the Player.
-    //    Vector3 clampPos = new Vector3(_ = isUsingXMin ? Mathf.Clamp(targetPos.x, xMin, float.MaxValue) : targetPos.x, targetPos.y, targetPos.z); // This line of code justs controlles how the camera will follow the target.
-    //    Vector3 smoothPos = Vector3.SmoothDamp(transform.position, clampPos, ref velocity, followSpeed * Time.deltaTime); // This line of code just takes the current postion of the target and sets how fast the camera will follow behind the target.
-
-    //    transform.position = new Vector3(transform.position.x, ,transform.position.z);
-    //}
-
-    private void Update()
+    void FixedUpdate()
     {
         if (target == null) return;
 
@@ -37,6 +26,17 @@ public class CameraFollow_V2 : MonoBehaviour
 
         transform.position = new Vector3(smoothPos.x, smoothPos.y, transform.position.z);
     }
+
+    //private void Update()
+    //{
+    //    if (target == null) return;
+
+    //    Vector3 targetPos = target.position + cameraOffset; // This line of code just makes the camera follow the Player.
+    //    Vector3 clampPos = new Vector3(_ = isUsingXMin ? Mathf.Clamp(targetPos.x, xMin, float.MaxValue) : targetPos.x, targetPos.y, targetPos.z); // This line of code justs controlles how the camera will follow the target.
+    //    Vector3 smoothPos = Vector3.SmoothDamp(transform.position, clampPos, ref velocity, followSpeed * Time.deltaTime); // This line of code just takes the current postion of the target and sets how fast the camera will follow behind the target.
+
+    //    transform.position = new Vector3(smoothPos.x, transform.position.y, transform.position.z);
+    //}
 
     public void SetTarget(Transform targetTr)
     {
