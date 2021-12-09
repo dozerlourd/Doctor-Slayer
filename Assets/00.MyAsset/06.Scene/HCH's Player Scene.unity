@@ -23156,6 +23156,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f463ed7b361c4c49b74433a60856fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackCategories:
+  - attackKind: 0
+    animTriggerName: ToPunchAttack
+    animPhaseIntegerName: PunchAttackPhase
+    attackCol: {fileID: 1987983364}
+    startColTiming: 0.45
+    endColTiming: 0.6
+    endAttackTiming: 0.9
+  - attackKind: 1
+    animTriggerName: ToPunchAttack
+    animPhaseIntegerName: PunchAttackPhase
+    attackCol: {fileID: 2073128871}
+    startColTiming: 0.45
+    endColTiming: 0.6
+    endAttackTiming: 0.9
+  - attackKind: 2
+    animTriggerName: ToKickAttack
+    animPhaseIntegerName: KickAttackPhase
+    attackCol: {fileID: 453814902}
+    startColTiming: 0.45
+    endColTiming: 0.6
+    endAttackTiming: 0.9
+  - attackKind: 3
+    animTriggerName: ToKickAttack
+    animPhaseIntegerName: KickAttackPhase
+    attackCol: {fileID: 927001252}
+    startColTiming: 0.45
+    endColTiming: 0.6
+    endAttackTiming: 0.9
   comboDuration: 1
   punchAttackCols:
   - {fileID: 1987983364}

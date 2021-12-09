@@ -2,8 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+internal class AttackCategory
+{
+    public enum ATTACK_KIND
+    {
+        PunchAttack1,
+        PunchAttack2,
+        KickAttack1,
+        KickAttack2,
+        ShootAttack
+    }
+
+    [SerializeField] internal ATTACK_KIND attackKind;
+
+    [SerializeField] internal string animTriggerName;
+    [SerializeField] internal string animPhaseIntegerName;
+    [SerializeField] internal Collider2D attackCol;
+    [SerializeField, Range(0f, 1f)] internal float startColTiming;
+    [SerializeField, Range(0f, 1f)] internal float endColTiming;
+    [SerializeField, Range(0f, 1f)] internal float endAttackTiming;
+}
+
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] AttackCategory[] attackCategories;
+
+
     [SerializeField] float comboDuration = 0.5f;
 
     [SerializeField] Collider2D[] punchAttackCols;
@@ -60,10 +85,10 @@ public class PlayerAttack : MonoBehaviour
         {
             case 0:
             case 1:
-                AttackCoroutine = StartCoroutine(PunchAttackCycle_1());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[0]));
                 break;
             case 2:
-                AttackCoroutine = StartCoroutine(PunchAttackCycle_2());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[1]));
                 break;
         }
     }
@@ -74,87 +99,40 @@ public class PlayerAttack : MonoBehaviour
         {
             case 0:
             case 1:
-                AttackCoroutine = StartCoroutine(KickAttackCycle_1());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[2]));
                 break;
             case 2:
-                AttackCoroutine = StartCoroutine(KickAttackCycle_2());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[3]));
                 break;
         }
     }
 
-    IEnumerator PunchAttackCycle_1()
+    IEnumerator AttackCycle(AttackCategory attackCategory)
     {
-        anim.SetTrigger("ToPunchAttack");
+        anim.SetTrigger(attackCategory.animTriggerName);
         yield return null;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
-        punchAttackCols[0].enabled = true;
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackCategory.startColTiming);
+        attackCategory.attackCol.enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
-        punchAttackCols[0].enabled = false;
-        isAttacking = false;
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= attackCategory.endColTiming);
+        attackCategory.attackCol.enabled = false;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
-        playerMove.CanMove = true;
-
-        yield return new WaitForSeconds(comboDuration);
-        anim.SetInteger("PunchAttackPhase", 0);
-    }
-
-    IEnumerator PunchAttackCycle_2()
-    {
-        anim.SetTrigger("ToPunchAttack");
-        yield return null;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.43f);
-        punchAttackCols[1].enabled = true;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.65f);
-        punchAttackCols[1].enabled = false;
-        isAttacking = false;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
-        playerMove.CanMove = true;
-
-        yield return new WaitForSeconds(comboDuration);
-        anim.SetInteger("PunchAttackPhase", 0);
-    }
-
-    IEnumerator KickAttackCycle_1()
-    {
-        anim.SetTrigger("ToKickAttack");
-        yield return null;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
-        punchAttackCols[0].enabled = true;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
-        punchAttackCols[0].enabled = false;
-        isAttacking = false;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
-        playerMove.CanMove = true;
-
-        yield return new WaitForSeconds(comboDuration);
-        anim.SetInteger("KickAttackPhase", 0);
-    }
-
-    IEnumerator KickAttackCycle_2()
-    {
-        anim.SetTrigger("ToKickAttack");
-        yield return null;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
-        punchAttackCols[0].enabled = true;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
-        punchAttackCols[0].enabled = false;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= (attackCategory.endAttackTiming == 0 ? 0.9f : attackCategory.endAttackTiming));
         playerMove.CanMove = true;
         isAttacking = false;
 
         yield return new WaitForSeconds(comboDuration);
-        anim.SetInteger("KickAttackPhase", 0);
+        anim.SetInteger(attackCategory.animPhaseIntegerName, 0);
     }
+
+    //public AttackCategory ChoiceAttackCategory(AttackCategory.ATTACK_KIND attack_kind)
+    //{
+    //    AttackCategory attackCategory;
+    //    for (int i = 0; i < attackCategories.Length; i++)
+    //    {
+    //        attackCategory = attack_kind == attackCategories[i].attackKind ? attackCategories[i] : null;
+    //    }
+    //    return attackCategory;
+    //}
 }
