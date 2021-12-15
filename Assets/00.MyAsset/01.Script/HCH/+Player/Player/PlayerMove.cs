@@ -36,6 +36,14 @@ public class PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Move();
+        JumpCheck();
+    }
+
+    #region Implementation Place
+
+    void Move()
+    {
         moveX = Input.GetAxisRaw("Horizontal");
         anim.SetBool("IsMove", moveX != 0 && !playerAttack.IsAttacking && CanMove);
         FlipCheck(moveX);
@@ -60,7 +68,10 @@ public class PlayerMove : MonoBehaviour
         {
             rigid.velocity = new Vector2(0, rigid.velocity.y);
         }
+    }
 
+    void JumpCheck()
+    {
         if (rigid.velocity.y == 0)
         {
             if (anim.GetBool("IsJumping") && falling)
@@ -85,4 +96,6 @@ public class PlayerMove : MonoBehaviour
     {
         return Physics2D.Raycast(transform.position, frontDir, moveSpeed * Time.deltaTime, LayerMask.GetMask("L_Ground"));
     }
+
+    #endregion
 }

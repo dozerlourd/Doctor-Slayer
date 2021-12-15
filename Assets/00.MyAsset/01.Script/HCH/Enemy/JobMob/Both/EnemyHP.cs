@@ -46,6 +46,7 @@ public class EnemyHP : HPControllerToEnemy
         if (!isAbsolute)
         {
             EnemyFSM.FlipCheck();
+            StopCoroutine(GetComponent<NormalEnemyFSM>().AttackCoroutine);
             Animator.SetTrigger("ToDamaged");
             //SoundManager.Instance.PlayVoiceOneShot(damagedVoiceClips);
 

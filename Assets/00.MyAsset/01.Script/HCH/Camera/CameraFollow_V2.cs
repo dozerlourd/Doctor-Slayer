@@ -16,6 +16,7 @@ public class CameraFollow_V2 : MonoBehaviour
     {
         StartCoroutine(FindTarget());
     }
+
     void FixedUpdate()
     {
         if (target == null) return;
@@ -45,7 +46,7 @@ public class CameraFollow_V2 : MonoBehaviour
 
     IEnumerator FindTarget()
     {
-        yield return new WaitWhile(() => PlayerSystem.Instance.Player == null);
-        target = PlayerSystem.Instance.Player.transform;
+        yield return new WaitWhile(() => PlayerSystem.Instance.PlayerCamPos == null);
+        target = PlayerSystem.Instance.PlayerCamPos.transform;
     }
 }

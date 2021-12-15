@@ -5,7 +5,7 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
     [SerializeField] DungeonData thisDungeon;
-    [SerializeField] GameObject portal;
+    [SerializeField] GameObject portal; // 포탈 프리팹
     Transform portalPos;
 
     bool isPortalInstantiate = false;
@@ -20,7 +20,6 @@ public class Door : MonoBehaviour
         if(IsClearThisRoom() && IsCurrRoom() && !isPortalInstantiate)
         {
             isPortalInstantiate = true;
-            //문 열렸을 때 효과같은거 따단~
             GameObject _portal = Instantiate(portal, portalPos.position, Quaternion.identity);
             _portal.GetComponent<Portal>().SetDungeonData(thisDungeon);
         }

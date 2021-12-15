@@ -116,6 +116,14 @@ public abstract class EnemyFSM : MonoBehaviour
         StopToWall();
     }
 
+    protected void FixedUpdate()
+    {
+        if (IsMove && IsNotWall && anim.GetCurrentAnimatorStateInfo(0).IsTag("WalkAnimation"))
+        {
+            transform.Translate(Vector2.right * flipValue * moveSpeed * Time.fixedDeltaTime);
+        }
+    }
+
     #endregion
 
     #region Implementation Place 
@@ -167,7 +175,8 @@ public abstract class EnemyFSM : MonoBehaviour
 
     protected void GroundCheck(float dist)
     {
-        isGround = Physics2D.Raycast(transform.position + Vector3.up * boxCol2D.offset.y, -transform.up, boxCol2D.size.y / 2 + dist, LayerMask.GetMask("L_Ground")) ? true : false;
+        Debug.DrawRay(transform.position + Vector3.up * boxCol2D.offset.y, -transform.up * (boxCol2D.size.y * transform.lossyScale.y / 2 + dist), Color.red);
+        isGround = Physics2D.Raycast(transform.position + Vector3.up * boxCol2D.offset.y, -transform.up, (boxCol2D.size.y * transform.lossyScale.y / 2) + dist, LayerMask.GetMask("L_Ground")) ? true : false;
     }
 
     protected float GetDistanceB2WPlayer()
@@ -242,11 +251,7 @@ public abstract class EnemyFSM : MonoBehaviour
     {
         IsMove = GetDistanceB2WPlayerXValue() >= attackRange;
         anim.SetBool("IsWalk", IsMove);
-        yield return null;
-        if(IsMove && IsNotWall)
-        {
-            transform.Translate(Vector2.right * flipValue * moveSpeed * Time.deltaTime);
-        }
+        yield return Time.fixedDeltaTime;
     }
 
     #endregion

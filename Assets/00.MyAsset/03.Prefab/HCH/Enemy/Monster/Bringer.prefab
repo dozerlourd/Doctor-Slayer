@@ -171,7 +171,7 @@ Transform:
   m_GameObject: {fileID: 8689224006875875945}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 1674582678474400031}
   - {fileID: 3468088385185079789}
@@ -283,7 +283,7 @@ MonoBehaviour:
   skillAttackDmg:
   - 10
   attackSpeed: 1
-  moveSpeed: 8.5
+  moveSpeed: 15
   playerDetectRange: 10
   wallDetectRange: 2
   attackRange: 2.5
@@ -294,17 +294,17 @@ MonoBehaviour:
   - {fileID: 6011242937552956245}
   waitStart: 0.5
   originFlipIsRight: 0
-  bringer_Variable:
-    skill_GodHand: {fileID: 5723722605407805117, guid: 99a24cd6f49384941abc0faa511f35dd, type: 3}
-    maxSkillEffectPoolCount: 5
-    skillEffectTiming: 0.375
+  variable:
+    skillEffect: {fileID: 5723722605407805117, guid: 99a24cd6f49384941abc0faa511f35dd, type: 3}
+    maxSkillEffectPoolCount: 3
+    skillEffectTiming: 0.53
     skillWeight: 800
     attackCol: {fileID: 8016015614558165628}
-    waitToAttack: 0
-    waitToSkill: 0
-    aggroDuration: 5
+    waitToAttack: 0.3
+    waitToSkill: 0.5
     attackVoiceClips: []
-    skillEffectClips_GodHand: []
+    skillEffectClips: []
+    aggroDuration: 10
 --- !u!114 &5798613253034332335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,9 +317,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b27caa472afdad478df69e3315edf7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lootingRate_Normal: 0
+  lootingRate_Normal: 100
   lootItems_Normal:
-  - item: {fileID: 3747274576641902038, guid: 3d38442a038542f439b86628d4fad78b, type: 3}
+  - item: {fileID: 0}
     weight: 1
   lootingRate_Rare: 0
   lootItems_Rare: []
@@ -381,6 +381,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8689224006875875951}
     m_Modifications:
+    - target: {fileID: 5239783344522582903, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5239783345023630895, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
+      propertyPath: m_Color.a
+      value: 0.78431374
+      objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -419,11 +427,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_LocalScale.y
-      value: 1.2
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_LocalPosition.x
@@ -459,7 +467,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.15
+      value: -1.225
       objectReference: {fileID: 0}
     - target: {fileID: 5239783345283680569, guid: cf896e7f7915d874c848b61e9c605f13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

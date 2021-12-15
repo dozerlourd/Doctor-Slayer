@@ -9,6 +9,12 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] Collider2D[] punchAttackCols;
     [SerializeField] Collider2D[] kickAttackCols;
 
+    [SerializeField, Range(0f, 1f)] float punch_StartTiming_1 = 0.45f, punch_StartTiming_2 = 0.45f;
+    [SerializeField, Range(0f, 1f)] float kick_StartTiming_1 = 0.45f, kick_StartTiming_2 = 0.45f;
+
+    [SerializeField, Range(0f, 1f)] float punch_EndTiming_1 = 0.45f, punch_EndTiming_2 = 0.45f;
+    [SerializeField, Range(0f, 1f)] float kick_EndTiming_1 = 0.45f, kick_EndTiming_2 = 0.45f;
+
     bool isAttacking = false;
 
     PlayerMove playerMove;
@@ -22,6 +28,15 @@ public class PlayerAttack : MonoBehaviour
     {
         anim = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
+        InitAttackColliders();
+    }
+
+    void InitAttackColliders()
+    {
+        for (int i = 0; i < punchAttackCols.Length; i++)
+        {
+            punchAttackCols[i].enabled = false;
+        }
     }
 
     // Update is called once per frame
@@ -56,9 +71,12 @@ public class PlayerAttack : MonoBehaviour
 
     void PunchAttack(int num)
     {
+        print(num);
         switch(num)
         {
             case 0:
+                AttackCoroutine = StartCoroutine(PunchAttackCycle_1());
+                break;
             case 1:
                 AttackCoroutine = StartCoroutine(PunchAttackCycle_1());
                 break;
@@ -73,10 +91,9 @@ public class PlayerAttack : MonoBehaviour
         switch (num)
         {
             case 0:
-            case 1:
                 AttackCoroutine = StartCoroutine(KickAttackCycle_1());
                 break;
-            case 2:
+            case 1:
                 AttackCoroutine = StartCoroutine(KickAttackCycle_2());
                 break;
         }
@@ -87,10 +104,10 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("ToPunchAttack");
         yield return null;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_StartTiming_1);
         punchAttackCols[0].enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_EndTiming_1);
         punchAttackCols[0].enabled = false;
         isAttacking = false;
 
@@ -106,10 +123,10 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("ToPunchAttack");
         yield return null;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.43f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_StartTiming_2);
         punchAttackCols[1].enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.65f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_EndTiming_2);
         punchAttackCols[1].enabled = false;
         isAttacking = false;
 
@@ -125,10 +142,10 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("ToKickAttack");
         yield return null;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_StartTiming_1);
         punchAttackCols[0].enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_EndTiming_1);
         punchAttackCols[0].enabled = false;
         isAttacking = false;
 
@@ -144,10 +161,10 @@ public class PlayerAttack : MonoBehaviour
         anim.SetTrigger("ToKickAttack");
         yield return null;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.45f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_StartTiming_2);
         punchAttackCols[0].enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_EndTiming_2);
         punchAttackCols[0].enabled = false;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);

@@ -9,6 +9,7 @@ TagManager:
   - SpecialAttack_Enemy
   - Poison_Enemy
   - Corpse
+  - CamPos
   layers:
   - Default
   - TransparentFX
@@ -49,11 +50,11 @@ TagManager:
   - name: S_Background
     uniqueID: 3556976939
     locked: 0
-  - name: S_Back Props
-    uniqueID: 1553747073
-    locked: 0
   - name: S_Platform
     uniqueID: 1041912479
+    locked: 0
+  - name: S_Back Props
+    uniqueID: 1553747073
     locked: 0
   - name: S_Enemy
     uniqueID: 2223589509

@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/00.MyAsset/06.Scene/Game Play Scene/LobbyScene.unity
     guid: f1adbd441a1553a4b85a1df44b600f43
   - enabled: 1
-    path: Assets/00.MyAsset/06.Scene/Game Play Scene/DungeonScene.unity
+    path: Assets/00.MyAsset/06.Scene/Game Play Scene/PlayScene.unity
     guid: 737116345fe7195459dd50dbb8998cc5
   - enabled: 1
     path: Assets/00.MyAsset/06.Scene/Game Play Scene/Dead Scene.unity

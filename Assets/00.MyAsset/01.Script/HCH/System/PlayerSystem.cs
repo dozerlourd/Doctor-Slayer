@@ -20,12 +20,15 @@ public class PlayerSystem : MonoBehaviour
     #region Variable
 
     [SerializeField] GameObject player;
+    [SerializeField] GameObject playerCamPos;
 
     #endregion
 
     #region Property
 
     public GameObject Player => player != null ? player : player = GameObject.FindGameObjectWithTag("Player");
+
+    public GameObject PlayerCamPos => playerCamPos != null ? playerCamPos : playerCamPos = GameObject.FindGameObjectWithTag("CamPos");
 
     #endregion
 
