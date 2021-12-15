@@ -2,8 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+internal class AttackCategory
+{
+    public enum ATTACK_KIND
+    {
+        PunchAttack1,
+        PunchAttack2,
+        KickAttack1,
+        KickAttack2,
+        ShootAttack
+    }
+
+    [SerializeField] internal ATTACK_KIND attackKind;
+
+    [SerializeField] internal string animTriggerName;
+    [SerializeField] internal string animPhaseIntegerName;
+    [SerializeField] internal Collider2D attackCol;
+}
+
 public class PlayerAttack : MonoBehaviour
 {
+    [SerializeField] AttackCategory[] attackCategories;
+
+
     [SerializeField] float comboDuration = 0.5f;
 
     [SerializeField] Collider2D[] punchAttackCols;
@@ -42,8 +64,8 @@ public class PlayerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // °ø°ÝÀ» ÇÒ ¶§ PlayerMoveÀÇ SetIsMove(value) °ªÀ» false·Î º¯°æÇÑ´Ù.
-        // °ø°ÝÀÌ ³¡³­ ÈÄ value °ªÀ» true·Î º¯°æÇÑ´Ù.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ PlayerMoveï¿½ï¿½ SetIsMove(value) ï¿½ï¿½ï¿½ï¿½ falseï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ value ï¿½ï¿½ï¿½ï¿½ trueï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½.
         if(Input.GetKeyDown(KeyCode.X))
         {
             if (!isAttacking)
@@ -75,13 +97,11 @@ public class PlayerAttack : MonoBehaviour
         switch(num)
         {
             case 0:
-                AttackCoroutine = StartCoroutine(PunchAttackCycle_1());
-                break;
             case 1:
-                AttackCoroutine = StartCoroutine(PunchAttackCycle_1());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[0]));
                 break;
             case 2:
-                AttackCoroutine = StartCoroutine(PunchAttackCycle_2());
+                AttackCoroutine = StartCoroutine(AttackCycle(attackCategories[1]));
                 break;
         }
     }
@@ -99,9 +119,9 @@ public class PlayerAttack : MonoBehaviour
         }
     }
 
-    IEnumerator PunchAttackCycle_1()
+    IEnumerator AttackCycle(AttackCategory attackCategory)
     {
-        anim.SetTrigger("ToPunchAttack");
+        anim.SetTrigger(attackCategory.animTriggerName);
         yield return null;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_StartTiming_1);
@@ -129,9 +149,6 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_EndTiming_2);
         punchAttackCols[1].enabled = false;
         isAttacking = false;
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
-        playerMove.CanMove = true;
 
         yield return new WaitForSeconds(comboDuration);
         anim.SetInteger("PunchAttackPhase", 0);
