@@ -101,15 +101,21 @@ public class PlayerHP : MonoBehaviour
     /// <summary> When Enemy Taking Damage, Generate this method </summary>
     IEnumerator PlayerDamaged()
     {
-        if (PlayerAttack.AttackCoroutine != null) PlayerAttack.StopCoroutine(PlayerAttack.AttackCoroutine);
+        if (PlayerAttack.AttackCoroutine != null)
+        {
+            PlayerAttack.StopCoroutine(PlayerAttack.AttackCoroutine);
+            PlayerAttack.SetAttackingFalse();
+        }
         PlayerMove.CanMove = false;
         Animator.SetTrigger("ToDamaged");
-        StartCoroutine(DamagedMove(0.5f, _ = GetComponent<SpriteRenderer>().flipX ? Vector2.right * 2 + Vector2.up * 0.5f : Vector2.left * 2 + Vector2.up * 0.5f));
+        StartCoroutine(DamagedMove(0.15f, _ = GetComponent<SpriteRenderer>().flipX ? Vector2.right * 2 + Vector2.up * 0.5f : Vector2.left * 2 + Vector2.up * 0.5f));
         yield return null;
     }
 
     IEnumerator PlayerDead()
     {
+        isDead = true;
+        Animator.SetTrigger("ToDie");
         yield return null;
     }
 

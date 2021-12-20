@@ -101,7 +101,7 @@ public class RogueFSM : EnemyFSM, IIdle, ITrace, IAttack_1, IAttack_2, ISkill_1,
 
     #region Implementation Place
 
-    protected override IEnumerator Co_Pattern()
+    public override IEnumerator Co_Pattern()
     {
         yield return new WaitForSeconds(waitStart);
 

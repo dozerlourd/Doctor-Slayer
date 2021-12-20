@@ -16,6 +16,7 @@ public class Variable
     [Header(" - Related to Enemy's attack")]
     [SerializeField] internal Collider2D attackCol;
     [SerializeField] internal float waitToAttack, waitToSkill;
+    [SerializeField] internal float startAttackTime = 0.53f, endAttackTime = 0.57f;
 
     [Header(" - Sound")]
     [SerializeField] internal AudioClip[] attackVoiceClips;
@@ -57,7 +58,7 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
 
     #region Implementation Place 
 
-    protected override IEnumerator Co_Pattern()
+    public override IEnumerator Co_Pattern()
     {
         yield return new WaitForSeconds(waitStart);
         while (true)
@@ -114,7 +115,7 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
         while (true)
         {
             FlipCheck();
-            if (GetDistanceB2WPlayer() < attackRange)
+            if (GetDistanceB2WPlayer() <= attackRange)
             {
                 anim.SetBool("IsWalk", false);
                 traceCount = 0;
@@ -133,12 +134,6 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
             }
             else
             {
-                //if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Walk"))
-                //{
-                //    yield return null;
-                //    continue;
-                //}
-
                 if (traceCount <= variable.aggroDuration)
                 {
                     anim.SetBool("IsWalk", true);
@@ -159,25 +154,16 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
         FlipCheck();
         //print("나 너 때린다!");
         anim.SetTrigger("ToAttack");
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Attack"));
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsTag("AttackAnimation"));
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.3f);
-        anim.SetFloat("AttackSpeed", 0.75f);
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.4f);
-        anim.SetFloat("AttackSpeed", 1f);
-
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.53f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= variable.startAttackTime);
         variable.attackCol.enabled = true;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.57f);
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= variable.endAttackTime);
         variable.attackCol.enabled = false;
 
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.6f);
-        anim.SetFloat("AttackSpeed", 0.85f);
-
         yield return variable.waitToAttack;
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Idle"));
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsTag("IdleAnimation"));
     }
 
     public IEnumerator EnemySkill_1()
@@ -188,13 +174,11 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
         //print("이거 아프다!");
 
         anim.SetTrigger("ToSkill");
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Cast"));
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsTag("CastAnimation"));
 
         anim.SetFloat("AttackSpeed", 0.65f);
 
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Damaged")) { StopCoroutine(variable.Co_Attack); }
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= variable.skillEffectTiming);
-        if (anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Damaged")) { StopCoroutine(variable.Co_Attack); }
         GodHand();
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.75f);
@@ -203,7 +187,7 @@ public class NormalEnemyFSM : EnemyFSM, IIdle, IPatrol, ITrace, IAttack_1, ISkil
         EnemyHP.SetAbsolute(false);
 
         yield return variable.waitToSkill;
-        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsName("Bringer_Idle"));
+        yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).IsTag("IdleAnimation"));
     }
 
     Vector2 RandomVec() => HCH_Random.Random.Genrand_Int32(1) <= 3 ? Vector2.zero : HCH_Random.Random.Genrand_Int32(1) >= 6 ? Vector2.right : Vector2.left;

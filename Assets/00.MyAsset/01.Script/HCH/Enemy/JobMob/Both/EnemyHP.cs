@@ -15,6 +15,8 @@ public class EnemyHP : HPControllerToEnemy
 
     [SerializeField] AudioClip[] deadVoiceClips;
 
+    [SerializeField] float knockbackPower = 1;
+
     bool isAbsolute = false;
 
     WaitForSeconds hardnessTime;
@@ -43,16 +45,40 @@ public class EnemyHP : HPControllerToEnemy
 
     protected override IEnumerator EnemyDamaged()
     {
+        NormalEnemyFSM normalEnemyFSM = GetComponent<NormalEnemyFSM>();
         if (!isAbsolute)
         {
             EnemyFSM.FlipCheck();
-            StopCoroutine(GetComponent<NormalEnemyFSM>().AttackCoroutine);
+
+            StartCoroutine(DamageKnockback());
+            StopCoroutine(normalEnemyFSM.AttackCoroutine);
+            StopCoroutine(normalEnemyFSM.PatternCoroutine);
             Animator.SetTrigger("ToDamaged");
             //SoundManager.Instance.PlayVoiceOneShot(damagedVoiceClips);
 
             yield return hardnessTime;
+            normalEnemyFSM.PatternCoroutine = StartCoroutine(normalEnemyFSM.Co_Pattern());
+
         }
         else yield return null;
+    }
+
+    IEnumerator DamageKnockback()
+    {
+        float rate = 0;
+        
+        while(rate < 0.2f)
+        {
+            float deltaTime = Time.deltaTime;
+            transform.Translate(KnockbackVector() * deltaTime);
+            rate += deltaTime;
+            yield return deltaTime;
+        }
+    }
+
+    Vector3 KnockbackVector()
+    {
+        return PlayerSystem.Instance.Player.transform.position.x < transform.position.x ? Vector3.right * knockbackPower : -Vector3.right * knockbackPower;
     }
 
     protected override void RefreshUI()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AttackCollider : MonoBehaviour
 {
-    [SerializeField] float attackDamage, gracePeriod;
+    [SerializeField] float attackDamage;
 
     private void Start()
     {
@@ -15,7 +15,9 @@ public class AttackCollider : MonoBehaviour
     {
         if(col.gameObject.CompareTag("Player"))
         {
-            col.GetComponent<PlayerStat>()?.SetHP(attackDamage, gracePeriod);
+            //print(col.gameObject.name);
+            col.GetComponent<PlayerHP>()?.TakeDamage(attackDamage);
+            GetComponent<Collider2D>().enabled = false;
         }
     }
 }

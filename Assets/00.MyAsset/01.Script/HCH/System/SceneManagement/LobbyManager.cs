@@ -17,7 +17,7 @@ public class LobbyManager : MonoBehaviour
     IEnumerator OnButtonStart()
     {
         yield return StartCoroutine(SceneEffectSystem.Instance.FadeOutCoroutine());
-        SceneManager.LoadScene("DungeonScene");
+        SceneManager.LoadScene("PlayScene");
     }
     public void OnClickQuitButton()
     {

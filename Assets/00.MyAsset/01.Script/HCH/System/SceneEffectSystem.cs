@@ -51,6 +51,7 @@ public class SceneEffectSystem : MonoBehaviour
     public void FadeIn(float _speed = 1) => Co_FadeIn = StartCoroutine(FadeInCoroutine(_speed));
     public IEnumerator FadeInCoroutine(float fadeSpeed = 1)
     {
+        print("FadeIn");
         if (Co_FadeIn != null) StopCoroutine(Co_FadeIn);
         if (Co_FadeOut != null) StopCoroutine(Co_FadeOut);
 
@@ -71,6 +72,7 @@ public class SceneEffectSystem : MonoBehaviour
     public void FadeOut(float _speed = 1) => Co_FadeOut = StartCoroutine(FadeOutCoroutine(_speed));
     public IEnumerator FadeOutCoroutine(float fadeSpeed = 1)
     {
+        print("FadeOut");
         if (Co_FadeIn != null) StopCoroutine(Co_FadeIn);
         if (Co_FadeOut != null) StopCoroutine(Co_FadeOut);
 

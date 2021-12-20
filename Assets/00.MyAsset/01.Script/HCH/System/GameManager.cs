@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator EntryTheStage()
     {
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "DungeonScene");
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "PlayScene");
 
 
 
@@ -44,14 +44,15 @@ public class GameManager : MonoBehaviour
         {
             for (int j = 0; j < StageSystem.Instance.CurrStage.GetDungeonCount(); j++)
             {
-                if (StageSystem.Instance.CurrStage.CurrDungeon.IsBossRoom)
-                {
-                    GameObject go = Instantiate(Resources.Load("BossHPBarCanvas")) as GameObject;
-                    go.name = "BossHPBarCanvas";
-                }
+                //print("스테이지 입장");
+                //if (StageSystem.Instance.CurrStage.CurrDungeon.IsBossRoom)
+                //{
+                //    GameObject go = Instantiate(Resources.Load("BossHPBarCanvas")) as GameObject;
+                //    go.name = "BossHPBarCanvas";
+                //}
                 PlayerSystem.Instance.Player.transform.position = StageSystem.Instance.CurrStage.CurrDungeon.InitPos.position;
 
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.35f);
 
                 yield return StartCoroutine(SceneEffectSystem.Instance.FadeInCoroutine());
 
@@ -61,11 +62,16 @@ public class GameManager : MonoBehaviour
                 StageSystem.Instance.CurrStage.CurrDungeon.IsJoin = true;
 
                 yield return new WaitUntil(() => StageSystem.Instance.CurrStage.CurrDungeon.GetEnemyCount() == 0 &&
-                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsClearThisRoom &&
-                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsNext);
+                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsClearThisRoom);
 
                 if (!StageSystem.Instance.CurrStage.CurrDungeon.IsBossRoom) {
+                    yield return new WaitUntil(() => StageSystem.Instance.CurrStage.CurrDungeon.IsNext);
                     StageSystem.Instance.CurrStage.NextDungeon();
+                }
+                else
+                {
+                    yield return new WaitForSeconds(1f);
+                    TestPanelManager.Instance.panel.GetComponent<Panel>().OpenPanel();
                 }
 
                 yield return StartCoroutine(SceneEffectSystem.Instance.FadeOutCoroutine());
@@ -73,7 +79,7 @@ public class GameManager : MonoBehaviour
             if (StageSystem.Instance.GetStageCount() == StageSystem.Instance.GetCurrStageIndex())
             {
                 //을리윽세스 패널 띄우기
-                print("을리윽세스");
+                
             }
             else
             {

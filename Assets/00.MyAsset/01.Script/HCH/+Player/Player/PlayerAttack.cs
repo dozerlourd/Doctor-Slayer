@@ -37,6 +37,10 @@ public class PlayerAttack : MonoBehaviour
         {
             punchAttackCols[i].enabled = false;
         }
+        for (int i = 0; i < kickAttackCols.Length; i++)
+        {
+            kickAttackCols[i].enabled = false;
+        }
     }
 
     void Update()
@@ -68,7 +72,7 @@ public class PlayerAttack : MonoBehaviour
 
     void PunchAttack(int num)
     {
-        print(num);
+        //print(num);
         switch(num)
         {
             case 0:
@@ -169,4 +173,6 @@ public class PlayerAttack : MonoBehaviour
         yield return new WaitForSeconds(comboDuration);
         anim.SetInteger("KickAttackPhase", 0);
     }
+
+    public void SetAttackingFalse() => isAttacking = false;
 }

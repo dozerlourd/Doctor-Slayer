@@ -37,7 +37,6 @@ public abstract class HPControllerToEnemy : MonoBehaviour
                 if (NormalizedCurrHP <= 0)
                 {
                     EnemyFSM.StopAllCoroutines();
-                    Animator.SetTrigger("ToDie");
                     Co_Dead = StartCoroutine(EnemyDead());
                 }
                 else if(damage > 0) StartCoroutine(EnemyDamaged());
@@ -87,9 +86,8 @@ public abstract class HPControllerToEnemy : MonoBehaviour
 
     protected virtual IEnumerator EnemyDead()
     {
+        animator.SetTrigger("ToDie");
         StageSystem.Instance.CurrStage.MinusEnemyCount();
-        //print("GetCurrDungeonIndex - " + StageSystem.Instance.CurrStage.GetCurrDungeonIndex());
-        //print("GetEnemyCount - " + StageSystem.Instance.CurrStage.CurrDungeon.GetEnemyCount());
         yield return null;
     }
 

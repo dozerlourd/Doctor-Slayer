@@ -70,7 +70,7 @@ public class NecromancerFSM : EnemyFSM, IIdle, ITrace, IAttack_1, ISkill_1, ISki
 
     #region Implementation Place
 
-    protected override IEnumerator Co_Pattern()
+    public override IEnumerator Co_Pattern()
     {
         yield return StartCoroutine(Pattern_1());
         //while(true)

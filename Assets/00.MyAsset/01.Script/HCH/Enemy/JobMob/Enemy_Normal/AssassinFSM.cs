@@ -46,7 +46,7 @@ public class AssassinFSM : EnemyFSM
 
     #region Implementation Place
 
-    protected override IEnumerator Co_Pattern()
+    public override IEnumerator Co_Pattern()
     {
         yield return new WaitForSeconds(waitStart);
     }

@@ -66,6 +66,7 @@ public abstract class EnemyFSM : MonoBehaviour
     protected Coroutine Co_Gravity;
     protected Coroutine Co_Freeze;
     protected Coroutine Co_FreezeColor;
+    public Coroutine PatternCoroutine;
 
     #endregion
 
@@ -103,7 +104,7 @@ public abstract class EnemyFSM : MonoBehaviour
     protected void OnEnable()
     {
         Co_Gravity = StartCoroutine(Grivaty());
-        StartCoroutine(Co_Pattern());
+        PatternCoroutine = StartCoroutine(Co_Pattern());
     }
 
     protected void Start()
@@ -128,7 +129,7 @@ public abstract class EnemyFSM : MonoBehaviour
 
     #region Implementation Place 
 
-    protected abstract IEnumerator Co_Pattern();
+    public abstract IEnumerator Co_Pattern();
 
     IEnumerator Grivaty()
     {
@@ -175,8 +176,9 @@ public abstract class EnemyFSM : MonoBehaviour
 
     protected void GroundCheck(float dist)
     {
-        Debug.DrawRay(transform.position + Vector3.up * boxCol2D.offset.y, -transform.up * (boxCol2D.size.y * transform.lossyScale.y / 2 + dist), Color.red);
-        isGround = Physics2D.Raycast(transform.position + Vector3.up * boxCol2D.offset.y, -transform.up, (boxCol2D.size.y * transform.lossyScale.y / 2) + dist, LayerMask.GetMask("L_Ground")) ? true : false;
+        Debug.DrawRay(transform.position + Vector3.up * boxCol2D.offset.y * transform.lossyScale.y, -transform.up * (boxCol2D.size.y * transform.lossyScale.y / 2 + dist), Color.red);
+        isGround = Physics2D.Raycast(transform.position + Vector3.up * boxCol2D.offset.y * transform.lossyScale.y, -transform.up, (boxCol2D.size.y * transform.lossyScale.y / 2 + dist),
+            LayerMask.GetMask("L_Ground")) ? true : false;
     }
 
     protected float GetDistanceB2WPlayer()
@@ -249,9 +251,11 @@ public abstract class EnemyFSM : MonoBehaviour
 
     protected IEnumerator Move()
     {
-        IsMove = GetDistanceB2WPlayerXValue() >= attackRange;
-        anim.SetBool("IsWalk", IsMove);
+        IsMove = anim.GetCurrentAnimatorStateInfo(0).IsTag("WalkAnimation");
         yield return Time.fixedDeltaTime;
+        //anim.SetBool("IsWalk", IsMove);
+        if(IsMove)
+        transform.Translate((_ = flipValue == 1 ? Vector2.right : -Vector2.right) * moveSpeed * 0.5f * Time.deltaTime);
     }
 
     #endregion

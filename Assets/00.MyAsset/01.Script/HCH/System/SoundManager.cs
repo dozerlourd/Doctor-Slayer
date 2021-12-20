@@ -31,7 +31,22 @@ public class SoundManager : MonoBehaviour
 
     #region Property
 
-    public AudioClip[] ButtonClickSounds => buttonClickSounds;
+    public AudioClip[] ButtonClickSounds
+    {
+        get
+        {
+            if (buttonClickSounds != null)
+            {
+                return buttonClickSounds;
+            }
+            else
+            {
+                AudioClip[] tempClip = new AudioClip[1];
+                tempClip[0] = Resources.Load("ButtonClickSound_2") as AudioClip;
+                return tempClip;
+            }
+        }
+    }
 
     #endregion
 
