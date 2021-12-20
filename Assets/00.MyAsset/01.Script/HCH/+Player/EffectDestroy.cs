@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EffectDestroy : MonoBehaviour
 {
+    [SerializeField] bool isDestroy = true;
     Animator anim;
 
     void Start()
@@ -15,7 +16,14 @@ public class EffectDestroy : MonoBehaviour
     {
         if (anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
         {
-            Destroy(gameObject);
+            if(isDestroy)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 }

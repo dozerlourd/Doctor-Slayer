@@ -15,10 +15,16 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField, Range(0f, 1f)] float punch_EndTiming_1 = 0.45f, punch_EndTiming_2 = 0.45f;
     [SerializeField, Range(0f, 1f)] float kick_EndTiming_1 = 0.45f, kick_EndTiming_2 = 0.45f;
 
+    [SerializeField] int hitEffectCount = 10;
+
+    GameObject[] hitEffects;
+    public GameObject[] HitEffects => hitEffects;
+
     bool isAttacking = false;
 
     PlayerMove playerMove;
     Animator anim;
+
 
     public Coroutine AttackCoroutine { get; private set; }
 
@@ -29,6 +35,9 @@ public class PlayerAttack : MonoBehaviour
         anim = GetComponent<Animator>();
         playerMove = GetComponent<PlayerMove>();
         InitAttackColliders();
+
+        hitEffects = new GameObject[hitEffectCount];
+        hitEffects = HCH.GameObjectPool.GeneratePool(Resources.Load("HitEffect") as GameObject, hitEffectCount);
     }
 
     void InitAttackColliders()

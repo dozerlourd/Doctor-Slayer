@@ -72,18 +72,18 @@ public class NecromancerFSM : EnemyFSM, IIdle, ITrace, IAttack_1, ISkill_1, ISki
 
     public override IEnumerator Co_Pattern()
     {
-        yield return StartCoroutine(Pattern_1());
-        //while(true)
-        //{
-        //    if (BossHP.NormalizedCurrHP >= 0.7f)
-        //        yield return StartCoroutine(Pattern_1());
+        while (true)
+        {
+            yield return StartCoroutine(Pattern_1());
+            //if (BossHP.NormalizedCurrHP >= 0.7f)
+            //    yield return StartCoroutine(Pattern_1());
 
-        //    else if (BossHP.NormalizedCurrHP >= 0.3f)
-        //        yield return StartCoroutine(Pattern_2());
+            //else if (BossHP.NormalizedCurrHP >= 0.3f)
+            //    yield return StartCoroutine(Pattern_2());
 
-        //    else
-        //        yield return StartCoroutine(Pattern_3());
-        //}
+            //else
+            //    yield return StartCoroutine(Pattern_3());
+        }
     }
 
     #region Patterns
@@ -103,10 +103,11 @@ public class NecromancerFSM : EnemyFSM, IIdle, ITrace, IAttack_1, ISkill_1, ISki
         yield return EnemyIdle();
         yield return EnemyAttack_1();
         yield return EnemyIdle();
+        yield return EnemyTrace();
+        yield return EnemyAttack_1();
+        yield return EnemyIdle();
         yield return EnemySkill_1();
         yield return EnemyIdle();
-        yield return EnemyIdle();
-        yield return EnemySkill_2();
     }
 
     IEnumerator Pattern_2()

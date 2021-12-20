@@ -56,33 +56,20 @@ public class Necro_DeathBolt : MonoBehaviour
     IEnumerator ExpAfterSetTime()
     {
         yield return new WaitForSeconds(Duration);
-        PlayerDetecting();
+        VanishedAndShowEffect();
     }
 
-    void PlayerDetecting()
+    void VanishedAndShowEffect()
     {
-        GameObject Player = null;
-        
-        RaycastHit2D hitInfo = Physics2D.CircleCast(transform.position, expRadius, Vector2.zero, 0, LayerMask.GetMask("L_Player"));
         Instantiate(BloodEffect, transform.position, Quaternion.identity);
-
-        if (hitInfo)
-        Player = hitInfo.collider.gameObject;
-
-        if (Player != null)
-        {
-            PlayerStat playerStat = Player.GetComponent<PlayerStat>();
-            Explosion(playerStat);
-        }
 
         gameObject.SetActive(false);
         StopAllCoroutines();
     }
 
-    void Explosion(PlayerStat _playerStat)
+    void Explosion(PlayerHP _playerHP)
     {
-        print(_playerStat.gameObject.name);
-        _playerStat.SetHP(damage, gracePariod);
+        _playerHP.TakeDamage(damage);
         gameObject.SetActive(false);
     }
 
@@ -103,36 +90,13 @@ public class Necro_DeathBolt : MonoBehaviour
 
         forwardDir.y = 0;
         transform.Translate(forwardDir * moveSpeed * Time.deltaTime);
-
-        #region junk code
-        //Vector3 targetPos = PlayerSystem.Instance.Player.transform.position;
-        //Vector3 moveDir = (targetPos - transform.position).normalized;
-        //float angleToTarget = Mathf.Atan2(moveDir.y, moveDir.x) * Mathf.Rad2Deg;
-        //Quaternion rotTarget = Quaternion.AngleAxis(angleToTarget, Vector3.forward);
-
-        //Vector3 rotDir = Vector3.Lerp(forwardDir, targerDir, rotSpeed * Time.deltaTime).normalized;
-
-        //transform.rotation = Quaternion.Slerp(transform.rotation, rotTarget, rotSpeed * Time.deltaTime);
-        //transform.Translate(moveDir * moveSpeed * Time.deltaTime);
-
-        //transform.right = forwardDir == transform.right ? -rotDir : rotDir;
-        //Quaternion.Slerp(transform.rotation, Quaternion.Euler(targerDir), rotSpeed * Time.deltaTime);
-        //transform.eulerAngles = rotDir * 180;
-        #endregion
-    }
-
-    void AccelerationGuidedMove()
-    {
-
     }
 
     #endregion
 
     #region Setter
 
-    /// <summary>
-    /// For Setting Death Bolt's Flip Value
-    /// </summary>
+    /// <summary> For Setting Death Bolt's Flip Value </summary>
     /// <param name="val"> Death Bolt's Flip Value </param>
     public void SetFlip(bool val) => spriteRenderer.flipX = val;
 
@@ -144,7 +108,8 @@ public class Necro_DeathBolt : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Player"))
         {
-            Explosion(col.GetComponent<PlayerStat>());
+            Instantiate(BloodEffect, transform.position, Quaternion.identity);
+            Explosion(col.GetComponent<PlayerHP>());
         }
     }
 
