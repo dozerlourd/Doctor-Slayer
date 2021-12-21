@@ -86,7 +86,7 @@ public abstract class HPControllerToEnemy : MonoBehaviour
 
     protected virtual IEnumerator EnemyDead()
     {
-        animator.SetTrigger("ToDie");
+        Animator.SetTrigger("ToDie");
         StageSystem.Instance.CurrStage.MinusEnemyCount();
         yield return null;
     }

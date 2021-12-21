@@ -25,7 +25,7 @@ public class CameraFollow_V2 : MonoBehaviour
         Vector3 clampPos = new Vector3(_ = isUsingXMin ? Mathf.Clamp(targetPos.x, xMin, float.MaxValue) : targetPos.x, targetPos.y, targetPos.z); // This line of code justs controlles how the camera will follow the target.
         Vector3 smoothPos = Vector3.SmoothDamp(transform.position, clampPos, ref velocity, followSpeed * Time.deltaTime); // This line of code just takes the current postion of the target and sets how fast the camera will follow behind the target.
 
-        transform.position = new Vector3(smoothPos.x, smoothPos.y, transform.position.z);
+        transform.position = new Vector3(smoothPos.x, transform.position.y, transform.position.z);
     }
 
     //private void Update()

@@ -61,7 +61,7 @@ public class InteractionManager : MonoBehaviour
     public void AddInterList(object _interObjType, GameObject _interactionObject)
     {
         InteractionObject interObj = _interObjType as InteractionObject;
-        print(interObj != null);
+        //print(interObj != null);
         if (interObj != null)
             interObjList.Add(_interactionObject);
     }

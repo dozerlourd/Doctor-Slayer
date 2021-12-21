@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHP : MonoBehaviour
 {
@@ -11,6 +12,9 @@ public class PlayerHP : MonoBehaviour
     bool isDead = false;
 
     float currHP;
+
+    Image hpBar;
+    public Image SetHpBar(ref Image val) => hpBar = val;
 
     PlayerAttack playerAttack;
     PlayerMove playerMove;
@@ -80,7 +84,8 @@ public class PlayerHP : MonoBehaviour
 
     void RefreshUI()
     {
-        
+        if (hpBar == null) return;
+        hpBar.fillAmount = CurrHP / MaxHP;
     }
 
     IEnumerator DamagedMove(float damagedTime, Vector2 damagedDir)
