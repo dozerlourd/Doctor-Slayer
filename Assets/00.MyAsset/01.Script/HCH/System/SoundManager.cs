@@ -23,9 +23,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip[] buttonClickSounds;
 
     AudioSource[] audioSource = new AudioSource[3];
-    AudioSource VoiceSource => audioSource[0] = audioSource[0] ? audioSource[0] : gameObject.AddComponent<AudioSource>();
-    AudioSource EffectSource => audioSource[1] = audioSource[1] ? audioSource[1] : gameObject.AddComponent<AudioSource>();
-    AudioSource EnvironmentSource => audioSource[2] = audioSource[2] ? audioSource[2] : gameObject.AddComponent<AudioSource>();
+    AudioSource bgmSource;
+
+    public float effectVolume { get; private set; } = 1;
 
     #endregion
 
@@ -48,6 +48,12 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    AudioSource VoiceSource => audioSource[0] = audioSource[0] ? audioSource[0] : gameObject.AddComponent<AudioSource>();
+    AudioSource EffectSource => audioSource[1] = audioSource[1] ? audioSource[1] : gameObject.AddComponent<AudioSource>();
+    AudioSource EnvironmentSource => audioSource[2] = audioSource[2] ? audioSource[2] : gameObject.AddComponent<AudioSource>();
+
+    AudioSource BGMSource => bgmSource = bgmSource ? bgmSource : transform.GetChild(0).GetComponent<AudioSource>();
+
     #endregion
 
     #region Implementation Place
@@ -57,36 +63,36 @@ public class SoundManager : MonoBehaviour
     #region Voice
     public void PlayVoiceOneShot(AudioClip _clip, float _volume = 1)
     {
-        VoiceSource.PlayOneShot(_clip, _volume);
+        VoiceSource.PlayOneShot(_clip, _volume * effectVolume);
     }
 
     public void PlayVoiceOneShot(AudioClip[] _clips, float _volume = 1)
     {
-        VoiceSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume);
+        VoiceSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume * effectVolume);
     }
     #endregion
 
     #region Effect
     public void PlayEffectOneShot(AudioClip _clip, float _volume = 1)
     {
-        EffectSource.PlayOneShot(_clip, _volume);
+        EffectSource.PlayOneShot(_clip, _volume * Instance.effectVolume);
     }
 
     public void PlayEffectOneShot(AudioClip[] _clips, float _volume = 1)
     {
-        EffectSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume);
+        EffectSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume * effectVolume);
     }
     #endregion
 
     #region Environment
     public void PlayEnvironmentOneShot(AudioClip _clip, float _volume = 1)
     {
-        EnvironmentSource.PlayOneShot(_clip, _volume);
+        EnvironmentSource.PlayOneShot(_clip, _volume * effectVolume);
     }
 
     public void PlayEnvironmentOneShot(AudioClip[] _clips, float _volume = 1)
     {
-        EnvironmentSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume);
+        EnvironmentSource.PlayOneShot(_clips[Random.Range(0, _clips.Length)], _volume * effectVolume);
     }
     #endregion
 
@@ -137,6 +143,16 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #endregion
+
+    public void SetBGMVolume(float value)
+    {
+        BGMSource.volume = value * 0.35f;
+    }
+
+    public void SetEffectVolume(float value)
+    {
+        effectVolume = value;
+    }
 
     #endregion
 }

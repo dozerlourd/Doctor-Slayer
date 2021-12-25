@@ -39,7 +39,7 @@ public abstract class HPControllerToEnemy : MonoBehaviour
                     EnemyFSM.StopAllCoroutines();
                     Co_Dead = StartCoroutine(EnemyDead());
                 }
-                else if(damage > 0) StartCoroutine(EnemyDamaged());
+                else if(NormalizedCurrHP > 0 && damage > 0) StartCoroutine(EnemyDamaged());
             }
         }
     }

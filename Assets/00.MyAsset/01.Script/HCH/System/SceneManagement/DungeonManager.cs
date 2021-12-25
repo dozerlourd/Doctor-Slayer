@@ -6,7 +6,7 @@ public class DungeonManager : MonoBehaviour
 {
     [SerializeField] GameObject player;
 
-    void Start()
+    void Awake()
     {
         GameObject _player = Instantiate(player);
         _player.TryGetComponent(out SpriteRenderer sp);

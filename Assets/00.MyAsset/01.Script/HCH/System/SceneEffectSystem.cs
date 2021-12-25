@@ -29,6 +29,7 @@ public class SceneEffectSystem : MonoBehaviour
 
     Image fadingImage;
     Image bloodFrameImage;
+    [SerializeField] Image bgbImage;
 
     Coroutine Co_FadeIn, Co_FadeOut;
     private void Start()
@@ -43,13 +44,14 @@ public class SceneEffectSystem : MonoBehaviour
     {
         fadingImage.gameObject.SetActive(true);
         bloodFrameImage.gameObject.SetActive(true);
+        bgbImage.gameObject.SetActive(false);
 
         fadingImage.color = new Color(0, 0, 0, 0);
         bloodFrameImage.color = new Color(1, 1, 1, 0);
     }
 
     public void FadeIn(float _speed = 1) => Co_FadeIn = StartCoroutine(FadeInCoroutine(_speed));
-    public IEnumerator FadeInCoroutine(float fadeSpeed = 1)
+    public IEnumerator FadeInCoroutine(float fadeRate = 0f, float fadeSpeed = 1)
     {
         //print("FadeIn");
         if (Co_FadeIn != null) StopCoroutine(Co_FadeIn);
@@ -60,7 +62,7 @@ public class SceneEffectSystem : MonoBehaviour
         Color fadingColor = fadingImage.color;
         fadingColor.a = alpha;
 
-        while (alpha > 0f)
+        while (alpha > fadeRate)
         {
             alpha -= fadeSpeed * Time.deltaTime;
             fadingColor.a = alpha;
@@ -70,7 +72,7 @@ public class SceneEffectSystem : MonoBehaviour
     }
 
     public void FadeOut(float _speed = 1) => Co_FadeOut = StartCoroutine(FadeOutCoroutine(_speed));
-    public IEnumerator FadeOutCoroutine(float fadeSpeed = 1)
+    public IEnumerator FadeOutCoroutine(float fadeRate = 1f, float fadeSpeed = 1)
     {
         //print("FadeOut");
         if (Co_FadeIn != null) StopCoroutine(Co_FadeIn);
@@ -81,7 +83,7 @@ public class SceneEffectSystem : MonoBehaviour
         Color fadingColor = fadingImage.color;
         fadingColor.a = alpha;
 
-        while (alpha < 1f)
+        while (alpha < fadeRate)
         {
             alpha += fadeSpeed * Time.deltaTime;
             fadingColor.a = alpha;
@@ -110,4 +112,16 @@ public class SceneEffectSystem : MonoBehaviour
             yield return null;
         }
     }
+
+    public void OnBGB()
+    {
+        bgbImage.gameObject.SetActive(true);
+    }
+
+    public void OffBGB()
+    {
+        bgbImage.gameObject.SetActive(false);
+    }
+
+    public bool GetBGBActivation() => bgbImage.gameObject.activeInHierarchy;
 }

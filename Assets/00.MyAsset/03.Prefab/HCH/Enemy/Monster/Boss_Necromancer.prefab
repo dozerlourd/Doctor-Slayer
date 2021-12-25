@@ -228,6 +228,7 @@ GameObject:
   - component: {fileID: 2210549677825196413}
   - component: {fileID: 2210549677825196409}
   - component: {fileID: 2210549677825196414}
+  - component: {fileID: 7366002577975272414}
   - component: {fileID: 2210549677825196408}
   - component: {fileID: 2210549677825196411}
   m_Layer: 8
@@ -385,6 +386,26 @@ MonoBehaviour:
     IdleDelayTime: 0.75
     attackEffectClips:
     - {fileID: 8300000, guid: f8a20a621404aae47a4c24408c50ae90, type: 3}
+--- !u!114 &7366002577975272414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2210549677825196402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b27caa472afdad478df69e3315edf7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootingRate_Normal: 0
+  lootItems_Normal: []
+  lootingRate_Rare: 0
+  lootItems_Rare: []
+  lootingRate_Epic: 0
+  lootItems_Epic: []
+  lootingRate_Legendery: 0
+  lootItems_Legendery: []
 --- !u!61 &2210549677825196408
 BoxCollider2D:
   m_ObjectHideFlags: 0

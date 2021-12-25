@@ -113,10 +113,10 @@ public class PlayerAttack : MonoBehaviour
         yield return null;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_StartTiming_1);
-        punchAttackCols[1].enabled = true;
+        punchAttackCols[0].enabled = true;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= punch_EndTiming_1);
-        punchAttackCols[1].enabled = false;
+        punchAttackCols[0].enabled = false;
         isAttacking = false;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
@@ -151,10 +151,10 @@ public class PlayerAttack : MonoBehaviour
         yield return null;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_StartTiming_1);
-        punchAttackCols[0].enabled = true;
+        kickAttackCols[0].enabled = true;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_EndTiming_1);
-        punchAttackCols[0].enabled = false;
+        kickAttackCols[0].enabled = false;
         isAttacking = false;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);
@@ -170,10 +170,10 @@ public class PlayerAttack : MonoBehaviour
         yield return null;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_StartTiming_2);
-        punchAttackCols[0].enabled = true;
+        kickAttackCols[1].enabled = true;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= kick_EndTiming_2);
-        punchAttackCols[0].enabled = false;
+        kickAttackCols[1].enabled = false;
         isAttacking = false;
 
         yield return new WaitUntil(() => anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.9f);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Panel : MonoBehaviour
+public abstract class PanelClass : MonoBehaviour, IPanel
 {
     [SerializeField] protected bool isLerp = false;
     [SerializeField] float lerpSpeed = 1;
@@ -22,12 +22,14 @@ public abstract class Panel : MonoBehaviour
     public virtual void OpenPanel()
     {
         if (gameObject.activeInHierarchy) return;
+        SceneEffectSystem.Instance.OnBGB();
         CoroutineManager.Instance.StartCoroutine(OnOffPanelAnimation(isLerp, true));
     }
 
     public virtual void ClosePanel()
     {
         if (!gameObject.activeInHierarchy) return;
+        SceneEffectSystem.Instance.OffBGB();
         CoroutineManager.Instance.StartCoroutine(OnOffPanelAnimation(isLerp, false));
     }
 

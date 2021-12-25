@@ -269,7 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae5d5ba36fc9a3468f56c42b2e01884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 7
+  damage: 6
   hitPos: {fileID: 458633846}
 --- !u!1 &6009581310230753034
 GameObject:
@@ -342,7 +342,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae5d5ba36fc9a3468f56c42b2e01884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 7
+  damage: 6
   hitPos: {fileID: 1273759038}
 --- !u!1 &6009581310931053237
 GameObject:
@@ -478,7 +478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85b957bdf2dfb5b4aa52a3b903cf74d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 100
+  maxHP: 125
 --- !u!114 &6009581310931053259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -629,7 +629,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae5d5ba36fc9a3468f56c42b2e01884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 9.5
   hitPos: {fileID: 1163626518}
 --- !u!1 &6009581311626575228
 GameObject:
@@ -702,5 +702,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ae5d5ba36fc9a3468f56c42b2e01884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 9.5
   hitPos: {fileID: 207088197}

@@ -62,24 +62,17 @@ public class GameManager : MonoBehaviour
                 StageSystem.Instance.CurrStage.CurrDungeon.IsJoin = true;
 
                 yield return new WaitUntil(() => StageSystem.Instance.CurrStage.CurrDungeon.GetEnemyCount() == 0 &&
-                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsClearThisRoom);
+                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsClearThisRoom &&
+                                                 StageSystem.Instance.CurrStage.CurrDungeon.IsNext);
 
                 if (!StageSystem.Instance.CurrStage.CurrDungeon.IsBossRoom) {
-                    yield return new WaitUntil(() => StageSystem.Instance.CurrStage.CurrDungeon.IsNext);
                     StageSystem.Instance.CurrStage.NextDungeon();
+                    yield return StartCoroutine(SceneEffectSystem.Instance.FadeOutCoroutine());
                 }
-                else
-                {
-                    yield return new WaitForSeconds(1f);
-                    TestPanelManager.Instance.panel.GetComponent<Panel>().OpenPanel();
-                }
-
-                yield return StartCoroutine(SceneEffectSystem.Instance.FadeOutCoroutine());
             }
             if (StageSystem.Instance.GetStageCount() == StageSystem.Instance.GetCurrStageIndex())
             {
                 //À»¸®À¹¼¼½º ÆÐ³Î ¶ç¿ì±â
-                
             }
             else
             {

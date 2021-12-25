@@ -42,10 +42,9 @@ public class BossHP_Necromancer : HPControllerToEnemy
 
     protected override void RefreshUI()
     {
-        if(!hpBar)
-        {
-            hpBar = GameObject.Find("BossHPBarCanvas").transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
-        }
+        hpBar = hpBar ? hpBar : GameObject.Find("BossHPBarCanvas").transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+
+        if (!hpBar) return;
         hpBar.fillAmount = currHP / maxHP;
     }
 

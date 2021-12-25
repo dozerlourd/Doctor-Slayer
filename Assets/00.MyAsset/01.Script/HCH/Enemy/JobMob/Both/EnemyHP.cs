@@ -51,8 +51,8 @@ public class EnemyHP : HPControllerToEnemy
             EnemyFSM.FlipCheck();
 
             StartCoroutine(DamageKnockback());
-            StopCoroutine(normalEnemyFSM.AttackCoroutine);
-            StopCoroutine(normalEnemyFSM.PatternCoroutine);
+            if(normalEnemyFSM.AttackCoroutine != null) StopCoroutine(normalEnemyFSM.AttackCoroutine);
+            if (normalEnemyFSM.PatternCoroutine != null) StopCoroutine(normalEnemyFSM.PatternCoroutine);
             Animator.SetTrigger("ToDamaged");
             //SoundManager.Instance.PlayVoiceOneShot(damagedVoiceClips);
 

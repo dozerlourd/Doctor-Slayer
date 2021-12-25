@@ -39,8 +39,11 @@ public class PlayerHP : MonoBehaviour
 
                 if (NormalizedCurrHP <= 0)
                 {
-                    Animator.SetTrigger("ToDie");
                     Co_Dead = StartCoroutine(PlayerDead());
+                }
+                else
+                {
+                    StartCoroutine(PlayerDamaged());
                 }
             }
         }
@@ -77,7 +80,6 @@ public class PlayerHP : MonoBehaviour
     {
         if (isDead) return;
 
-        StartCoroutine(PlayerDamaged());
         DamageUISystem.Instance.DisplayDamageText(_damage, transform);
         CurrHP -= _damage;
     }

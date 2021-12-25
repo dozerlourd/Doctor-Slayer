@@ -74,7 +74,13 @@ public abstract class EnemyFSM : MonoBehaviour
 
     #region Property
 
-    protected Vector2 playerPos => PlayerSystem.Instance.Player.transform.position;
+    protected Vector2 playerPos
+    {
+        get
+        {
+            return PlayerSystem.Instance.Player ? PlayerSystem.Instance.Player.transform.position : Vector3.zero;
+        }
+    }
 
     protected float flipValue => originFlipIsRight ? spriteRenderer.flipX ? -1 : 1 : spriteRenderer.flipX ? 1 : -1;
 
