@@ -11,7 +11,7 @@ public class LobbyManager : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(SceneEffectSystem.Instance.FadeInCoroutine());
+        StartCoroutine(SceneEffectSystem.Instance.FadeInCoroutine());
     }
 
     public void OnEnterDungeonButton()

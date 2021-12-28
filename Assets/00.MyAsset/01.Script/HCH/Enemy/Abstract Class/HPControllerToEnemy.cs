@@ -88,6 +88,7 @@ public abstract class HPControllerToEnemy : MonoBehaviour
     {
         Animator.SetTrigger("ToDie");
         StageSystem.Instance.CurrStage.MinusEnemyCount();
+        GetComponent<SettingMonsterInfo>()?.SetActiveUI();
         yield return null;
     }
 

@@ -44,7 +44,7 @@ public class PlayerMove : MonoBehaviour
 
     void Move()
     {
-        moveX = Input.GetAxisRaw("Horizontal");
+        moveX = InputManager.Instance.InputVecX;
         anim.SetBool("IsMove", moveX != 0 && !playerAttack.IsAttacking && CanMove);
         FlipCheck(moveX);
 
@@ -55,13 +55,14 @@ public class PlayerMove : MonoBehaviour
                 rigid.velocity = new Vector2(moveX * moveSpeed * 100 * Time.deltaTime, rigid.velocity.y);
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (InputManager.Instance.GetJumpBtnValue())
             {
                 if (rigid.velocity.y == 0 && !anim.GetBool("IsJumping"))
                 {
                     anim.SetBool("IsJumping", true);
                     rigid.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 }
+                InputManager.Instance.SetInputValue(out InputManager.Instance.inputButton.jumpBtn, false);
             }
         }
         else

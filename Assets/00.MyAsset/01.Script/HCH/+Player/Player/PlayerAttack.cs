@@ -54,7 +54,7 @@ public class PlayerAttack : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.X))
+        if(InputManager.Instance.GetPunchAttackBtnValue())
         {
             if (!isAttacking)
             {
@@ -64,9 +64,10 @@ public class PlayerAttack : MonoBehaviour
                 PunchAttack(anim.GetInteger("PunchAttackPhase"));
                 anim.SetInteger("PunchAttackPhase", (anim.GetInteger("PunchAttackPhase") + 1) % 3);
             }
+            InputManager.Instance.SetInputValue(out InputManager.Instance.inputButton.punchAttackBtn, false);
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (InputManager.Instance.GetKickAttackBtnValue())
         {
             if (!isAttacking)
             {
@@ -77,6 +78,7 @@ public class PlayerAttack : MonoBehaviour
                 anim.SetInteger("KickAttackPhase", (anim.GetInteger("KickAttackPhase") + 1) % 2);
             }
         }
+        InputManager.Instance.SetInputValue(out InputManager.Instance.inputButton.kickAttackBtn, false);
     }
 
     void PunchAttack(int num)

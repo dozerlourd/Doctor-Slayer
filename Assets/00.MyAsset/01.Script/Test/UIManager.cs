@@ -6,31 +6,30 @@ using UnityEngine.UI;
 
 public class UIManager : SingletonObject<UIManager>
 {
-    public List<GameObject> panelList { get; private set; }
-    public List<GameObject> buttonList { get; private set; }
+    public List<GameObject> PanelList { get; private set; }
+    public List<GameObject> ButtonList { get; private set; }
+
+    public GameObject BossCanvas { get; private set; }
 
     private void Start()
     {
-        StartCoroutine(ActivatePlayerUI());
+        StartCoroutine(ActivatePlaySceneUI());
 
-        panelList = new List<GameObject>();
-        buttonList = new List<GameObject>();
+        PanelList = new List<GameObject>();
+        ButtonList = new List<GameObject>();
 
         FindChildObjects(transform);
-
-        print(panelList.Count);
-        print(buttonList.Count);
     }
 
     void FindChildObjects(Transform _this)
     {
         if(_this.TryGetComponent(out IPanel _panel))
         {
-            panelList.Add(_this.gameObject);
+            PanelList.Add(_this.gameObject);
         }
         else if (_this.TryGetComponent(out IButton _button))
         {
-            buttonList.Add(_this.gameObject);
+            ButtonList.Add(_this.gameObject);
         }
 
         for (int i = 0; i < _this.transform.childCount; i++)
@@ -40,10 +39,39 @@ public class UIManager : SingletonObject<UIManager>
         }
     }
 
-    IEnumerator ActivatePlayerUI()
+    IEnumerator ActivatePlaySceneUI()
     {
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "PlayScene");
+        string currSceneName = SceneManager.GetActiveScene().name;
 
-        transform.GetChild(0).gameObject.SetActive(true);
+        ActivatePlayerUI();
+        DisActivateBossUI();
+
+        while (true)
+        {
+            yield return new WaitUntil(() => SceneManager.GetActiveScene().name != currSceneName);
+            currSceneName = SceneManager.GetActiveScene().name;
+            ActivatePlayerUI();
+        }
+    }
+
+    void ActivatePlayerUI() => transform.GetChild(0).gameObject.SetActive(SceneManager.GetActiveScene().name == "PlayScene");
+
+    void DisActivateBossUI()
+    {
+
+        BossCanvas = transform.GetChild(1).gameObject;
+        BossCanvas.SetActive(false);
+    }
+
+    public OptionPanel FindOptionPanel()
+    {
+        for (int i = 0; i < PanelList.Count; i++)
+        {
+            if (PanelList[i].TryGetComponent(out OptionPanel op))
+            {
+                return op;
+            }
+        }
+        return null;
     }
 }

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Co_EntryTheStage = StartCoroutine(EntryTheStage());
+        StartCoroutine(ExitDungeon());
     }
 
     IEnumerator EntryTheStage()
@@ -78,6 +79,17 @@ public class GameManager : MonoBehaviour
             {
                 StageSystem.Instance.NextStage();
             }
+        }
+    }
+
+    IEnumerator ExitDungeon()
+    {
+        while(true)
+        {
+            yield return new WaitUntil(() => SceneManager.GetActiveScene().name != "PlayScene" && Co_EntryTheStage != null);
+
+            StopCoroutine(Co_EntryTheStage);
+            Co_EntryTheStage = StartCoroutine(EntryTheStage());
         }
     }
 }
